@@ -150,6 +150,11 @@ header.top{position:sticky;top:0;z-index:60;border-bottom:1px solid var(--line);
 .hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;pointer-events:none}
 .hero::before{width:420px;height:420px;background:radial-gradient(circle,rgba(124,58,237,.35),transparent 70%);top:-160px;right:-90px}
 .hero::after{width:360px;height:360px;background:radial-gradient(circle,rgba(14,165,233,.28),transparent 70%);bottom:-180px;left:-120px}
+.hero-tg .btn{position:relative;overflow:hidden;isolation:isolate}
+.hero-tg .btn::after{content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;z-index:1;pointer-events:none;
+  background:linear-gradient(105deg,transparent 0,rgba(255,255,255,.75) 50%,transparent 100%);transform:skewX(-20deg);animation:tgShine 5s ease-in-out infinite}
+@keyframes tgShine{0%,70%{left:-70%}100%{left:130%}}
+@media(prefers-reduced-motion:reduce){.hero-tg .btn::after{animation:none;display:none}}
 .hero-tg{display:flex;justify-content:flex-end;margin-bottom:clamp(14px,2.5vw,26px);position:relative}
 @media(max-width:560px){.hero-tg{justify-content:stretch}.hero-tg .btn{width:100%;justify-content:center}}
 .hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:34px;align-items:center;position:relative}

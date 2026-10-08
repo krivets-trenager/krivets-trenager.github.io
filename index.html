@@ -354,6 +354,13 @@ header.top{position:sticky;top:0;z-index:60;border-bottom:1px solid var(--line);
 .score-ring .bg{stroke:var(--line-2)}
 .score-ring .fg{stroke:url(#scoreGrad);transition:stroke-dasharray 1s var(--ease)}
 .score-ring .val{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--font-head);font-size:30px;font-weight:800}
+.review{text-align:left;margin:16px auto 0;max-width:640px;border:1px solid var(--line);border-radius:var(--r-m);background:var(--surface);padding:4px 14px}
+.review summary{cursor:pointer;font-weight:700;padding:11px 0;color:var(--indigo);list-style:none}
+.review summary::-webkit-details-marker{display:none}
+.review summary::after{content:" ▾"}.review[open] summary::after{content:" ▴"}
+.review .ri{padding:11px 0;border-top:1px solid var(--line-2);font-size:14.6px;display:grid;gap:3px;border-left:3px solid var(--mint);padding-left:11px;margin:6px 0}
+.review .ri.bad{border-left-color:var(--rose)}
+.review .ri b{color:var(--ink)}.review .ri em{font-style:normal;color:var(--ink-2);background:var(--amber-soft);border-radius:10px;padding:7px 10px;margin-top:3px}
 .wrong-list{text-align:left;margin:16px auto 0;max-width:640px}
 .wrong-list .wi{padding:12px 15px;border-radius:var(--r-m);background:var(--bg-2);margin-bottom:8px;font-size:14.6px}
 .wrong-list .wi b{display:block;color:var(--ink);margin-bottom:3px}
@@ -1536,7 +1543,7 @@ function mountTrainer(el,topics,visual,testable){
       (S.i>0?' и один вопрос на повторение темы «'+topics[S.i-1].n+'»':'')+'.</p>'+
       '<button class="btn btn-primary js-tt-go">'+svgIco('i-medal')+'Начать тест</button></div>';
   }
-  function ttStart(){ttBuild();TT.qi=0;TT.score=0;TT.wrong=[];ttRender();}
+  function ttStart(){ttBuild();TT.qi=0;TT.score=0;TT.wrong=[];TT.log=[];ttRender();}
   function ttRender(){
     if(TT.qi>=TT.items.length)return ttResult();
     var it=TT.items[TT.qi],task=it.task,letters=['А','Б','В','Г','Д'];
@@ -1554,8 +1561,9 @@ function mountTrainer(el,topics,visual,testable){
     ttArea.innerHTML=h;
     var inp=$('.js-tt-input',ttArea);if(inp){try{inp.focus({preventScroll:true});}catch(e){}}
   }
-  function ttAnswered(good){
+  function ttAnswered(good,mine){
     var task=TT.items[TT.qi].task;
+    TT.log.push({q:task.q.replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim(),mine:String(mine),a:String(ttCorrectText(task)),e:(TT.items[TT.qi].topic.h||''),ok:!!good});
     if(good){TT.score++;}else{TT.wrong.push({q:task.q.replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim(),a:String(ttCorrectText(task))});}
     var tfb=$('.js-tt-fb',ttArea);
     tfb.innerHTML='<div class="explain">'+(good?'<b>Верно!</b>':'<b>Правильный ответ: '+ttCorrectText(task)+'.</b>')+'</div>'+
@@ -1579,6 +1587,12 @@ function mountTrainer(el,topics,visual,testable){
       h+='<div class="wrong-list"><p style="font-weight:700;margin:14px 0 8px">Что повторить:</p>'+
         TT.wrong.map(function(w){return '<div class="wi"><b>'+w.q+'</b>Правильный ответ: '+w.a+'.</div>';}).join('')+'</div>';
     }else{h+='<p class="muted">Ни одной ошибки!</p>';}
+    if(TT.log.length){
+        h+='<details class="review"><summary>Разбор всех вопросов ('+TT.log.length+')</summary>'+
+          TT.log.map(function(w,n){return '<div class="ri '+(w.ok?'ok':'bad')+'"><b>'+(n+1)+'. '+w.q+'</b>'+
+            (w.ok?'<span>Ваш ответ верный: '+w.a+'</span>':'<span>Ваш ответ: '+w.mine+'</span><span>Правильный ответ: '+w.a+'</span>')+
+            (w.e?'<em>'+w.e+'</em>':'')+'</div>';}).join('')+'</details>';
+      }
     h+='<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px">'+
       '<button class="btn btn-primary js-tt-again">Пройти ещё раз</button>'+
       '<button class="btn btn-ghost js-tt-back">'+svgIco('i-target')+'Вернуться к тренажёру</button></div></div>';
@@ -1695,13 +1709,13 @@ function mountTrainer(el,topics,visual,testable){
       if(e.target.closest('.js-tt-check')){
         var tinp=$('.js-tt-input',ttArea);if(!tinp||tinp.disabled)return;
         if(!tinp.value.trim()){tinp.focus();return;}
-        ttAnswered(isRight(tinp.value,TT.items[TT.qi].task.a));return;
+        ttAnswered(isRight(tinp.value,TT.items[TT.qi].task.a),tinp.value.trim());return;
       }
       var tob=e.target.closest('.js-tt-opt');
       if(tob&&!tob.disabled){
         var ttask=TT.items[TT.qi].task,tk=+tob.getAttribute('data-k');
         $$('.js-tt-opt',ttArea).forEach(function(x){x.disabled=true;var kk=+x.getAttribute('data-k');if(kk===ttask.c)x.classList.add('right');else if(kk===tk)x.classList.add('wrong');});
-        ttAnswered(tk===ttask.c);return;
+        ttAnswered(tk===ttask.c,ttask.o[tk]);return;
       }
     }
     if(e.target.closest('.js-check')){
@@ -1745,13 +1759,13 @@ function gradeInfo(pc){
   return{n:2,cls:'grade-2',label:'неудовлетворительно'};
 }
 function mountQuiz(el,bank,label){
-  var i=0,score=0,answered=false,wrong=[],order=[];
+  var i=0,score=0,answered=false,wrong=[],order=[],log=[];
   function intro(){
     el.innerHTML='<div class="quiz-intro"><p class="muted">'+bank.length+' вопросов, время не ограничено. '+
       'После каждого ответа — короткое объяснение, а в конце — список тем, которые стоит повторить.</p>'+
       '<button class="btn btn-primary js-start">'+svgIco('i-medal')+'Начать тест</button></div>';
   }
-  function start(){i=0;score=0;wrong=[];order=bank.map(function(_,k){return k;});render();}
+  function start(){i=0;score=0;wrong=[];log=[];order=bank.map(function(_,k){return k;});render();}
   function render(){
     if(i>=order.length){return result();}
     var q=bank[order[i]];answered=false;
@@ -1790,6 +1804,12 @@ function mountQuiz(el,bank,label){
     }else{
       h+='<p class="muted">Ни одной ошибки — можно переходить к следующей теме.</p>';
     }
+    if(log.length){
+        h+='<details class="review"><summary>Разбор всех вопросов ('+log.length+')</summary>'+
+          log.map(function(w,n){return '<div class="ri '+(w.ok?'ok':'bad')+'"><b>'+(n+1)+'. '+w.q+'</b>'+
+            (w.ok?'<span>Ваш ответ верный: '+w.a+'</span>':'<span>Ваш ответ: '+w.mine+'</span><span>Правильный ответ: '+w.a+'</span>')+
+            (w.e?'<em>'+w.e+'</em>':'')+'</div>';}).join('')+'</details>';
+      }
     h+='<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px">'+
       '<button class="btn btn-primary js-again">Пройти ещё раз</button>'+
       '<a class="btn btn-tg" href="https://t.me/krivets_teach" target="_blank" rel="noopener">'+svgIco('i-telegram')+'Разобрать с репетитором</a></div></div>';
@@ -1807,6 +1827,7 @@ function mountQuiz(el,bank,label){
       x.disabled=true;var kk=+x.getAttribute('data-k');
       if(kk===q.c)x.classList.add('right'); else if(kk===k)x.classList.add('wrong');
     });
+    log.push({q:q.q.replace(/<[^>]*>/g,' '),mine:q.o[k],a:q.o[q.c],e:q.e,ok:k===q.c});
     if(k===q.c){score++;countSolved();}
     else{wrong.push({q:q.q.replace(/<[^>]*>/g,' '),a:q.o[q.c],e:q.e});}
     $('.js-exp',el).innerHTML='<div class="explain">'+(k===q.c?'<b>Верно.</b> ':'<b>Правильный ответ: '+q.o[q.c]+'.</b> ')+q.e+'</div>'+

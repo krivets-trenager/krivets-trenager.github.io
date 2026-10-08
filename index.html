@@ -1530,7 +1530,7 @@ function mountTrainer(el,topics,visual,testable){
       practiceWrap=$('.js-practice-wrap',el),ttArea=testable?$('.js-tt-area',el):null;
   chips.innerHTML=topics.map(function(t,i){return '<button class="chip'+(i===0?' on':'')+'" data-i="'+i+'">'+(visual?topicIcon(t.n)+' ':'')+t.n+'</button>';}).join('');
 
-  var TT_MIN=8;
+  var TT_MIN=10;
   function ttCorrectText(task){return task.o?task.o[task.c]:task.a;}
   function ttBuild(){
     var topic=topics[S.i];TT.items=[];
@@ -1582,6 +1582,7 @@ function mountTrainer(el,topics,visual,testable){
     else{var ck=$('.js-tt-check',ttArea);if(ck)ck.disabled=true;var ip=$('.js-tt-input',ttArea);if(ip)ip.disabled=true;}
   }
   function ttResult(){
+    if(!TT.items.length){ttIntro();return;}
     var pc=Math.round(TT.score/TT.items.length*100),gr=gradeInfo(pc);
     var dash=2*Math.PI*56,filled=dash*pc/100;
     var h='<div class="result"><div class="score-ring"><svg viewBox="0 0 132 132"><circle class="bg" cx="66" cy="66" r="56"/>'+

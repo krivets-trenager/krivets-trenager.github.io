@@ -1534,15 +1534,19 @@ function mountTrainer(el,topics,visual,testable){
   function ttCorrectText(task){return task.o?task.o[task.c]:task.a;}
   function ttBuild(){
     var topic=topics[S.i];TT.items=[];
-    var bank=topic.test||[],seen={};
-    bank.forEach(function(item){TT.items.push({topic:topic,task:item});seen[item.q]=1;});
-    for(var tries=0;TT.items.length<TT_MIN&&tries<80;tries++){
-      var gt=topic.g();if(!gt||seen[gt.q])continue;seen[gt.q]=1;TT.items.push({topic:topic,task:gt});
+    var bank=topic.test||[],seen={},seen2={};
+    function sig(t){return t.q+'|'+(t.o?t.o.join(','):t.a);}
+    bank.forEach(function(item){TT.items.push({topic:topic,task:item});seen[item.q]=1;seen2[sig(item)]=1;});
+    for(var tries=0;TT.items.length<TT_MIN&&tries<120;tries++){
+      var gt=topic.g();if(!gt||seen[gt.q])continue;seen[gt.q]=1;seen2[sig(gt)]=1;TT.items.push({topic:topic,task:gt});
+    }
+    for(tries=0;TT.items.length<TT_MIN&&tries<200;tries++){
+      var g2=topic.g();if(!g2||seen2[sig(g2)])continue;seen2[sig(g2)]=1;TT.items.push({topic:topic,task:g2});
     }
     if(S.i>0){TT.items.push({topic:topics[S.i-1],task:topics[S.i-1].g()});}
   }
   function ttIntro(){
-    var topic=topics[S.i],n=Math.max((topic.test||[]).length,TT_MIN)+(S.i>0?1:0);
+    var topic=topics[S.i];ttBuild();var n=TT.items.length;
     ttArea.innerHTML='<div class="quiz-intro"><p class="muted">Тест по теме «'+topic.n+'»: '+n+' заданий с проверкой ответа'+
       (S.i>0?' и один вопрос на повторение темы «'+topics[S.i-1].n+'»':'')+'.</p>'+
       '<button class="btn btn-primary js-tt-go">'+svgIco('i-medal')+'Начать тест</button></div>';
@@ -2536,7 +2540,19 @@ CURR[6]={
    g:function(){var d=pick([3,9,4,2,5]),base=d*R(Math.ceil(100/d),Math.floor(999/d)),opts=[base],x;
      while(opts.length<4){x=R(100,999);if(x%d!==0&&opts.indexOf(x)<0)opts.push(x);}
      var right=opts[0];shuffle(opts);
-     return{q:'Какое число делится на '+d+'?',o:opts.map(String),c:opts.indexOf(right)};}},
+     return{q:'Какое число делится на '+d+'?',o:opts.map(String),c:opts.indexOf(right)};},
+   test:[
+    {q:'Какое из чисел делится на 5?',o:['1234','3745','2018','5502'],c:1},
+    {q:'Какое из чисел делится на 10?',o:['2105','1255','3450','7001'],c:2},
+    {q:'Найдите сумму цифр числа 4563. Делится ли оно на 9? Введите сумму цифр.',a:18},
+    {q:'Какое из чисел делится и на 2, и на 3?',o:['124','132','135','140'],c:1},
+    {q:'Число делится на 4, если число из двух его последних цифр делится на 4. Какое из чисел делится на 4?',o:['1226','3514','7316','9042'],c:2},
+    {q:'Число делится на 6, если оно делится и на 2, и на 3. Какое из чисел делится на 6?',o:['125','130','139','114'],c:3},
+    {q:'Какую наименьшую цифру можно поставить вместо * , чтобы число 52* делилось на 3?<span class="hint-line">сумма цифр должна делиться на 3</span>',a:2},
+    {q:'Из цифр 1, 2 и 5 (каждую используем один раз) составьте наибольшее трёхзначное число, которое делится на 5.',a:215},
+    {q:'Верно ли утверждение: «Если число делится на 9, то оно делится и на 3»?',o:['Да, потому что 9 = 3 · 3','Нет, не верно','Только для чётных чисел','Только для чисел больше 100'],c:0},
+    {q:'Какую цифру нужно поставить вместо * , чтобы число 3*5 делилось на 9? Введите цифру.<span class="hint-line">3 + * + 5 должно делиться на 9</span>',a:1}
+   ]},
   {n:'НОД',h:'Раскладываем на простые множители и берём общие в наименьших степенях. Или подбираем наибольший общий делитель.',
    g:function(){var g=R(2,12),a=g*R(2,9),b=g*R(2,9);return{q:'НОД('+a+'; '+b+')',a:gcd(a,b)};}},
   {n:'НОК',h:'НОК — наименьшее число, которое делится на оба. Проверка: НОД · НОК = a · b.',

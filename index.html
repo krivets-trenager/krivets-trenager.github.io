@@ -3455,32 +3455,30 @@ var TIPS=[
 ];
 var el=document.getElementById('tipFairy'),box=document.getElementById('tipBox'),txt=document.getElementById('tipText'),kind=document.getElementById('tipKind'),cls=document.getElementById('tipClose');
 if(!el||!txt)return;
-var FIRST=10000,SHOW=35000,GAP=15000;
-var order=[],pos=0,tShow=null,tHide=null,closed=false,startedAt=0,left=0;
-try{closed=sessionStorage.getItem('tipOff')==='1';}catch(e){}
+var FIRST=15000,SHOW=35000,GAP=15000,AFTER_CLOSE=20000;
+var order=[],pos=0,tShow=null,tHide=null,startedAt=0,left=0;
 function shuffle(){order=TIPS.map(function(_,i){return i;});for(var i=order.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=order[i];order[i]=order[j];order[j]=t;}pos=0;}
 shuffle();
 function pick(){if(pos>=order.length)shuffle();var t=TIPS[order[pos++]];kind.textContent=t[0]==='Факт'?'Знаете ли вы?':(t[0]==='Совет'?'Совет учителя':t[0]);txt.textContent=t[1];}
 function duration(){return Math.max(SHOW,Math.min(40000,txt.textContent.length*320));}
 function show(){
-  if(closed)return;
   pick();var d=duration();
   el.style.setProperty('--dur',d/1000+'s');
   el.classList.remove('on','paused');void el.offsetWidth;el.classList.add('on');
   startedAt=Date.now();left=d;
-  clearTimeout(tHide);tHide=setTimeout(hide,d);
+  clearTimeout(tHide);tHide=setTimeout(function(){hide();},d);
 }
-function hide(){
+function hide(wait){
   el.classList.remove('on','paused');clearTimeout(tHide);clearTimeout(tShow);
-  if(!closed)tShow=setTimeout(show,GAP);
+  tShow=setTimeout(show,wait||GAP);
 }
 function pause(){if(!el.classList.contains('on')||el.classList.contains('paused'))return;el.classList.add('paused');clearTimeout(tHide);left-=Date.now()-startedAt;}
-function resume(){if(!el.classList.contains('paused'))return;el.classList.remove('paused');startedAt=Date.now();tHide=setTimeout(hide,Math.max(left,8000));}
+function resume(){if(!el.classList.contains('paused'))return;el.classList.remove('paused');startedAt=Date.now();tHide=setTimeout(function(){hide();},Math.max(left,8000));}
 box.addEventListener('mouseenter',pause);box.addEventListener('mouseleave',resume);
 box.addEventListener('click',function(e){if(e.target===cls)return;clearTimeout(tHide);show();});
-cls.addEventListener('click',function(e){e.stopPropagation();closed=true;try{sessionStorage.setItem('tipOff','1');}catch(x){}hide();});
-document.addEventListener('visibilitychange',function(){if(document.hidden){clearTimeout(tShow);}else if(!closed&&!el.classList.contains('on')){clearTimeout(tShow);tShow=setTimeout(show,GAP);}});
-if(!closed)tShow=setTimeout(show,FIRST);
+cls.addEventListener('click',function(e){e.stopPropagation();hide(AFTER_CLOSE);});
+document.addEventListener('visibilitychange',function(){if(document.hidden){clearTimeout(tShow);}else if(!el.classList.contains('on')){clearTimeout(tShow);tShow=setTimeout(show,GAP);}});
+tShow=setTimeout(show,FIRST);
 })();
 </script>
 </body>

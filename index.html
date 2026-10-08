@@ -1530,20 +1530,26 @@ function mountTrainer(el,topics,visual,testable){
       practiceWrap=$('.js-practice-wrap',el),ttArea=testable?$('.js-tt-area',el):null;
   chips.innerHTML=topics.map(function(t,i){return '<button class="chip'+(i===0?' on':'')+'" data-i="'+i+'">'+(visual?topicIcon(t.n)+' ':'')+t.n+'</button>';}).join('');
 
+  var TT_MIN=8;
   function ttCorrectText(task){return task.o?task.o[task.c]:task.a;}
   function ttBuild(){
     var topic=topics[S.i];TT.items=[];
-    var bank=topic.test||[];
-    bank.forEach(function(item){TT.items.push({topic:topic,task:item});});
+    var bank=topic.test||[],seen={};
+    bank.forEach(function(item){TT.items.push({topic:topic,task:item});seen[item.q]=1;});
+    for(var tries=0;TT.items.length<TT_MIN&&tries<80;tries++){
+      var gt=topic.g();if(!gt||seen[gt.q])continue;seen[gt.q]=1;TT.items.push({topic:topic,task:gt});
+    }
     if(S.i>0){TT.items.push({topic:topics[S.i-1],task:topics[S.i-1].g()});}
   }
   function ttIntro(){
-    var topic=topics[S.i],n=(topic.test||[]).length+(S.i>0?1:0);
-    ttArea.innerHTML='<div class="quiz-intro"><p class="muted">Тест по теме «'+topic.n+'»: '+n+' заданий — формулы, уравнение, текстовая задача'+
+    var topic=topics[S.i],n=Math.max((topic.test||[]).length,TT_MIN)+(S.i>0?1:0);
+    ttArea.innerHTML='<div class="quiz-intro"><p class="muted">Тест по теме «'+topic.n+'»: '+n+' заданий с проверкой ответа'+
       (S.i>0?' и один вопрос на повторение темы «'+topics[S.i-1].n+'»':'')+'.</p>'+
       '<button class="btn btn-primary js-tt-go">'+svgIco('i-medal')+'Начать тест</button></div>';
   }
-  function ttStart(){ttBuild();TT.qi=0;TT.score=0;TT.wrong=[];TT.log=[];ttRender();}
+  function ttStart(){ttBuild();TT.qi=0;TT.score=0;TT.wrong=[];TT.log=[];
+    if(!TT.items.length){ttArea.innerHTML='<div class="quiz-intro"><p class="muted">Для этой темы тест пока недоступен. Потренируйтесь в тренажёре.</p><button class="btn btn-ghost js-tt-back">'+svgIco('i-target')+'Вернуться к тренажёру</button></div>';return;}
+    ttRender();}
   function ttRender(){
     if(TT.qi>=TT.items.length)return ttResult();
     var it=TT.items[TT.qi],task=it.task,letters=['А','Б','В','Г','Д'];

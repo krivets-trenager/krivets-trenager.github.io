@@ -109,6 +109,7 @@ header.top{position:sticky;top:0;z-index:60;border-bottom:1px solid var(--line);
 .icon-btn:hover{transform:translateY(-2px);box-shadow:var(--sh-1);border-color:var(--indigo);color:var(--indigo)}
 .burger{display:none}
 @media(max-width:1200px){.brand small{display:none}}
+@media(min-width:1081px) and (max-width:1240px){.nav-links a{padding:9px 8px;font-size:14px}.nav-links a::after{left:9px;right:9px}}
 @media(max-width:1080px){
   .nav{height:62px}
   .nav-links{position:fixed;inset:62px 0 auto 0;flex-direction:column;gap:2px;background:var(--surface);
@@ -508,6 +509,125 @@ a.tg-card span{display:block;font-size:13.4px;opacity:.93;line-height:1.3}
   body.printing .no-print{display:none !important}
   body{background:#fff}
 }
+/* ---------- игра «Таблица умножения» ---------- */
+.mg-profile{display:flex;align-items:center;gap:18px 26px;flex-wrap:wrap}
+.mg-rank{display:flex;align-items:center;gap:14px;flex:1 1 260px;min-width:0}
+.mg-rank-ico{width:56px;height:56px;flex:none;border-radius:18px;display:grid;place-items:center;font-size:30px;
+  background:linear-gradient(135deg,var(--indigo-soft),var(--plum-soft));box-shadow:inset 0 0 0 2px var(--line)}
+.mg-rank-txt{flex:1;min-width:0}
+.mg-rank-txt b{display:block;font-family:var(--font-head);font-size:20px;font-weight:800}
+.mg-rank-txt span{font-size:13.4px;color:var(--ink-3);font-weight:600}
+.mg-xpbar{height:9px;border-radius:9px;background:var(--bg-2);margin-top:7px;overflow:hidden}
+.mg-xpbar i{display:block;height:100%;width:0;border-radius:9px;background:linear-gradient(90deg,var(--indigo),var(--plum));transition:width .6s var(--ease)}
+.mg-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;flex:2 1 420px}
+.mg-kpi{background:var(--bg-2);border-radius:var(--r-m);padding:10px 12px;text-align:center;position:relative;overflow:hidden}
+.mg-kpi b{display:block;font-family:var(--font-head);font-size:22px;font-weight:800;color:var(--ink)}
+.mg-kpi small{font-size:12.2px;color:var(--ink-3);font-weight:600}
+.mg-goalbar{position:absolute;left:0;bottom:0;height:4px;width:100%;background:var(--line-2)}
+.mg-goalbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--mint),var(--sky));transition:width .5s var(--ease)}
+@media(max-width:560px){.mg-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.mg-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:18px;align-items:start}
+@media(max-width:920px){.mg-grid{grid-template-columns:1fr}}
+.mg-play{position:relative;margin-bottom:18px}
+.mg-modes{margin-bottom:16px}
+.mg-modes .tab{padding:9px 14px;font-size:14.2px}
+@media(max-width:560px){.mg-modes{display:grid;grid-template-columns:1fr 1fr;border-radius:20px}.mg-modes .tab{justify-content:center;padding:9px 6px}}
+
+.mg-intro{text-align:center;padding:10px 4px 6px}
+.mg-intro .mg-big{font-size:46px;line-height:1;margin-bottom:8px}
+.mg-intro h4{font-family:var(--font-head);font-size:21px;margin:0 0 6px}
+.mg-intro p{color:var(--ink-2);margin:0 auto 16px;max-width:46ch}
+.mg-colpick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:4px 0 6px}
+.mg-colbtn{border:1.5px solid var(--line);background:var(--surface);border-radius:var(--r-m);padding:10px 4px 8px;cursor:pointer;font:inherit;color:var(--ink);
+  transition:border-color .2s,transform .2s}
+.mg-colbtn:hover{border-color:var(--indigo);transform:translateY(-2px)}
+.mg-colbtn b{display:block;font-family:var(--font-head);font-size:20px}
+.mg-colbtn span{font-size:13px;letter-spacing:1px;color:var(--amber)}
+.mg-colbtn span .off{color:var(--line)}
+
+.mg-hud{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px;font-size:13.6px;font-weight:700;color:var(--ink-2)}
+.mg-hud .mg-time{font-family:var(--font-head);font-size:20px;color:var(--amber);min-width:44px}
+.mg-hud .mg-combo{margin-left:auto;padding:5px 11px;border-radius:100px;background:var(--amber-soft);color:var(--amber);opacity:0;transition:opacity .2s}
+.mg-hud .mg-combo.on{opacity:1}
+.mg-prog{height:6px;border-radius:6px;background:var(--bg-2);overflow:hidden;margin-bottom:14px}
+.mg-prog i{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--plum));transition:width .3s var(--ease)}
+.mg-q{position:relative;text-align:center;font-family:var(--font-head);font-weight:800;font-size:clamp(40px,8vw,62px);letter-spacing:-.01em;
+  padding:18px 10px;border-radius:var(--r-l);background:linear-gradient(160deg,var(--bg-2),var(--surface));border:2px dashed var(--line);
+  white-space:nowrap}
+.mg-q .ans{display:inline-block;min-width:1.6em;padding:0 .12em;border-bottom:4px solid var(--indigo);color:var(--indigo)}
+.mg-q .ans.empty{color:var(--ink-3)}
+.mg-q.ok{border-style:solid;border-color:var(--mint);background:linear-gradient(160deg,var(--mint-soft),var(--surface));animation:pop .3s var(--ease)}
+.mg-q.ok .ans{color:var(--mint);border-color:var(--mint)}
+.mg-q.no{border-style:solid;border-color:var(--rose);animation:shake .42s}
+.mg-q.no .ans{color:var(--rose);border-color:var(--rose);text-decoration:line-through}
+.mg-plus{position:absolute;right:14px;top:10px;font-size:17px;font-weight:800;color:var(--mint);pointer-events:none;animation:mgUp .9s var(--ease) forwards}
+@keyframes mgUp{from{opacity:1;transform:translateY(6px)}to{opacity:0;transform:translateY(-26px)}}
+.mg-fb{min-height:24px;margin:10px 0 4px;font-weight:650;font-size:15px;color:var(--ink-2);text-align:center}
+.mg-fb.no{color:var(--rose)}
+.mg-trick{margin:6px 0 10px;padding:11px 14px;border-radius:var(--r-m);background:var(--amber-soft);border-left:3px solid var(--amber);font-size:14.6px;color:var(--ink-2);text-align:left}
+.mg-trick b{color:var(--ink)}
+.mg-pad{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-width:340px;margin:12px auto 0}
+.mg-pad button{height:54px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font-family:var(--font-head);
+  font-size:22px;font-weight:800;cursor:pointer;box-shadow:var(--sh-1);transition:transform .08s,background .15s;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.mg-pad button:active{transform:scale(.94);background:var(--indigo-soft)}
+.mg-pad .ok{background:linear-gradient(135deg,var(--indigo),var(--indigo-2));color:#fff;border:0;font-size:17px}
+.mg-pad .del{font-size:18px;color:var(--ink-2)}
+.mg-row{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+
+.mg-res{text-align:center;padding:6px 0}
+.mg-res .mg-big{font-size:44px;line-height:1}
+.mg-res h4{font-family:var(--font-head);font-size:22px;margin:8px 0 4px}
+.mg-res .mg-stars-big{font-size:34px;letter-spacing:4px;color:var(--amber);margin:4px 0}
+.mg-res .mg-stars-big .off{color:var(--line)}
+.mg-res-stats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0}
+.mg-res-stats span{background:var(--bg-2);border-radius:100px;padding:7px 13px;font-size:13.6px;font-weight:700;color:var(--ink-2)}
+.mg-res-list{text-align:left;max-width:460px;margin:10px auto 0;font-size:14.4px;color:var(--ink-2)}
+.mg-res-list b{color:var(--rose)}
+.mg-newbadge{display:inline-flex;align-items:center;gap:8px;margin:6px 4px 0;padding:7px 13px;border-radius:100px;background:var(--amber-soft);color:var(--ink);font-weight:700;font-size:14px;animation:pop .4s var(--ease)}
+
+.mg-toast{position:absolute;left:50%;top:12px;transform:translate(-50%,-10px);opacity:0;pointer-events:none;z-index:3;
+  padding:9px 16px;border-radius:18px;background:var(--ink);color:var(--surface);font-weight:700;font-size:14px;max-width:92%;width:max-content;text-align:center;
+  box-shadow:var(--sh-2);transition:opacity .3s,transform .3s var(--ease)}
+.mg-toast.on{opacity:1;transform:translate(-50%,0)}
+
+.mg-map-wrap{overflow-x:auto;margin-top:8px}
+.mg-map{border-collapse:separate;border-spacing:4px;margin:0 auto;font-family:var(--font-head);font-weight:800}
+.mg-map th{font-size:13px;color:var(--ink-3);width:34px;height:30px}
+.mg-map td{width:34px;height:34px;text-align:center;border-radius:9px;font-size:13.5px;cursor:pointer;transition:transform .15s;user-select:none}
+.mg-map td:hover{transform:scale(1.12)}
+.mg-map td.sel{outline:2.5px solid var(--indigo);outline-offset:1px}
+.mg-map .l0,.mg-legend .l0{background:var(--bg-2);color:var(--ink-3)}
+.mg-map .l1,.mg-legend .l1{background:var(--rose-soft);color:var(--rose)}
+.mg-map .l2,.mg-legend .l2{background:var(--amber-soft);color:var(--amber)}
+.mg-map .l3,.mg-legend .l3{background:var(--mint-soft);color:var(--mint)}
+.mg-legend{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;margin-top:12px;font-size:12.8px;color:var(--ink-3);font-weight:600}
+.mg-legend span{display:inline-flex;align-items:center;gap:6px}
+.mg-legend i{width:14px;height:14px;border-radius:4px;display:inline-block}
+.mg-fact{margin-top:12px;padding:11px 14px;border-radius:var(--r-m);background:var(--bg-2);font-size:14.2px;color:var(--ink-2);min-height:46px}
+.mg-fact b{color:var(--ink)}
+@media(max-width:400px){.mg-map th,.mg-map td{width:29px;height:30px;font-size:12px}.mg-map{border-spacing:3px}}
+
+.mg-badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:8px}
+.mg-badge{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r-m);border:1.5px solid var(--line);background:var(--surface)}
+.mg-badge .e{font-size:26px;line-height:1;flex:none}
+.mg-badge b{display:block;font-size:13.8px;color:var(--ink)}
+.mg-badge small{display:block;font-size:12px;color:var(--ink-3);line-height:1.3}
+.mg-badge.lock{opacity:.55;filter:grayscale(1)}
+.mg-badge.got{border-color:var(--amber);background:linear-gradient(160deg,var(--amber-soft),var(--surface))}
+
+.mg-report{display:grid;gap:8px;font-size:14.8px;color:var(--ink-2)}
+.mg-report .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.mg-report .pill{display:inline-block;padding:4px 10px;border-radius:100px;font-weight:700;font-family:var(--font-head);font-size:14px}
+.mg-report .p1{background:var(--rose-soft);color:var(--rose)}.mg-report .p2{background:var(--amber-soft);color:var(--amber)}
+.mg-parent-btns{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.mg-cta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:0 0 22px;padding:14px 18px;border-radius:var(--r-l);
+  background:linear-gradient(135deg,var(--indigo-soft),var(--plum-soft));border:1px solid var(--line)}
+.mg-cta .e{font-size:30px}
+.mg-cta p{margin:0;flex:1 1 260px;color:var(--ink-2);font-size:15px}
+.mg-cta p b{color:var(--ink)}
+@media print{#mtgame{display:none}}
+body.mg-playing .tip-fairy{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
 </style>
 </head>
 <body>
@@ -577,6 +697,7 @@ a.tg-card span{display:block;font-size:13.4px;opacity:.93;line-height:1.3}
       <a href="#preschool">Дошкольникам</a>
       <a href="#primary">1–4 класс</a>
       <a href="#middle">5–9 класс</a>
+      <a href="#mtgame">Игра ×</a>
       <a href="#cheatsheet">Шпаргалки</a>
       <a href="#theory">Теория</a>
       <a href="#parents">Родителям</a>
@@ -638,6 +759,9 @@ a.tg-card span{display:block;font-size:13.4px;opacity:.93;line-height:1.3}
       <a href="#middle" class="tile"><div class="ico i-indigo"><svg class="ic"><use href="#i-triangle-ruler"/></svg></div>
         <h3>5–9 класс</h3><p>Дроби, проценты, отрицательные числа, уравнения, степени, квадратные уравнения, функции и геометрия.</p>
         <span class="go">Открыть <svg class="ic"><use href="#i-arrow-right"/></svg></span></a>
+      <a href="#mtgame" class="tile"><div class="ico i-amber"><svg class="ic"><use href="#i-bolt"/></svg></div>
+        <h3>Таблица умножения — игра</h3><p>Проверка за 3 минуты, тренировка слабых примеров, звёзды, рекорды и награды. Для любого возраста.</p>
+        <span class="go">Играть <svg class="ic"><use href="#i-arrow-right"/></svg></span></a>
       <a href="#cheatsheet" class="tile"><div class="ico i-mint"><svg class="ic"><use href="#i-sparkle"/></svg></div>
         <h3>Шпаргалки</h3><p>Таблица умножения, единицы измерения и формулы — можно распечатать и повесить над столом.</p>
         <span class="go">Открыть <svg class="ic"><use href="#i-arrow-right"/></svg></span></a>
@@ -647,6 +771,77 @@ a.tg-card span{display:block;font-size:13.4px;opacity:.93;line-height:1.3}
       <a href="#parents" class="tile"><div class="ico i-plum"><svg class="ic"><use href="#i-users"/></svg></div>
         <h3>Родителям</h3><p>Как заниматься дома без слёз, как разбирать задачу и когда пора звать репетитора.</p>
         <span class="go">Открыть <svg class="ic"><use href="#i-arrow-right"/></svg></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ИГРА: ТАБЛИЦА УМНОЖЕНИЯ ============ -->
+<section class="section rv" id="mtgame">
+  <div class="container">
+    <div class="sec-head">
+      <span class="kicker"><svg class="ic"><use href="#i-bolt"/></svg> Игра для любого возраста</span>
+      <h2>Таблица умножения: выучить играючи</h2>
+      <p>Если в 5–9 классе «тормозит» каждая новая тема, часто причина в таблице умножения. Пройдите проверку —
+        игра найдёт именно те примеры, которые ребёнок не помнит, и будет тренировать только их. 5–10 минут в день, и через
+        2–3 недели таблица станет «автоматом».</p>
+    </div>
+
+    <div class="card mg-profile" id="mgProfile">
+      <div class="mg-rank"><span class="mg-rank-ico" id="mgRankIco">🌱</span>
+        <div class="mg-rank-txt"><b id="mgRankName">Новичок</b><span id="mgRankNext">до следующего ранга: 150 очков</span>
+          <div class="mg-xpbar"><i id="mgXpBar"></i></div></div></div>
+      <div class="mg-kpis">
+        <span class="mg-kpi"><b id="mgKnown">0</b><small>из 36 наизусть</small></span>
+        <span class="mg-kpi"><b id="mgStars">0</b><small>звёзд из 24</small></span>
+        <span class="mg-kpi"><b id="mgBlitzBest">0</b><small>рекорд блица</small></span>
+        <span class="mg-kpi mg-goal"><b><span id="mgGoalN">0</span>/30</b><small>цель дня</small><span class="mg-goalbar"><i id="mgGoalBar"></i></span></span>
+      </div>
+    </div>
+
+    <div class="mg-grid">
+      <div class="card mg-play" id="mgPlay">
+        <div class="tabs mg-modes" role="tablist">
+          <button class="tab on" data-mode="diag" role="tab" aria-selected="true">🔍 Проверка</button>
+          <button class="tab" data-mode="train" role="tab" aria-selected="false">🎯 Тренировка</button>
+          <button class="tab" data-mode="cols" role="tab" aria-selected="false">⭐ Столбики</button>
+          <button class="tab" data-mode="blitz" role="tab" aria-selected="false">⚡ Блиц</button>
+        </div>
+        <div id="mgStage"></div>
+        <div class="mg-toast" id="mgToast" role="status" aria-live="polite"></div>
+      </div>
+
+      <div class="mg-side">
+        <div class="card">
+          <div class="card-head"><span class="badge-ico i-mint"><svg class="ic"><use href="#i-grid"/></svg></span>
+            <div><h3>Моя таблица</h3><div class="sub">Нажмите на клетку — покажем хитрость, как запомнить</div></div></div>
+          <div class="mg-map-wrap"><table class="mg-map" id="mgMap"></table></div>
+          <div class="mg-legend">
+            <span><i class="l0"></i>не проверено</span><span><i class="l1"></i>ошибка</span>
+            <span><i class="l2"></i>знает, но медленно</span><span><i class="l3"></i>наизусть</span>
+          </div>
+          <div class="mg-fact" id="mgFact">Зелёная клетка — пример решён правильно и быстро (до 4 секунд).</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="badge-ico i-amber"><svg class="ic"><use href="#i-medal"/></svg></span>
+        <div><h3>Награды</h3><div class="sub">Открываются за успехи — соберите все</div></div></div>
+      <div class="mg-badges" id="mgBadges"></div>
+    </div>
+
+    <div class="card mg-parent">
+      <div class="card-head"><span class="badge-ico i-plum"><svg class="ic"><use href="#i-users"/></svg></span>
+        <div><h3>Для родителя</h3><div class="sub">Что уже выучено и над чем работать на этой неделе</div></div></div>
+      <div id="mgReport"></div>
+      <div class="mg-parent-btns">
+        <button class="btn btn-ghost btn-sm" id="mgCopy"><svg class="ic"><use href="#i-share"/></svg>Скопировать отчёт</button>
+        <button class="btn btn-ghost btn-sm" id="mgReset">Сбросить прогресс</button>
+      </div>
+      <div class="card-note"><svg class="ic"><use href="#i-bulb"/></svg>
+        <span>Как заниматься: сначала «Проверка» (3 минуты), потом каждый день 1–2 «Тренировки» по 15 примеров.
+          Раз в несколько дней — «Столбики» на звёзды и «Блиц» на рекорд. Хвалите за рост: «вчера 12 зелёных, сегодня 15».
+          Прогресс сохраняется на этом устройстве, в этом браузере.</span></div>
     </div>
   </div>
 </section>
@@ -699,6 +894,9 @@ a.tg-card span{display:block;font-size:13.4px;opacity:.93;line-height:1.3}
       <p>Здесь чаще всего появляются пробелы: дроби, проценты, отрицательные числа и первые доказательства.
         Пройдите тест — он покажет, какие темы просели.</p>
     </div>
+    <div class="mg-cta"><span class="e">✖️</span>
+      <p><b>Тормозит каждая тема?</b> Часто причина — пробелы в таблице умножения. Проверка за 3 минуты покажет, какие примеры не выучены.</p>
+      <a href="#mtgame" class="btn btn-primary btn-sm">Проверить таблицу<svg class="ic"><use href="#i-arrow-right"/></svg></a></div>
     <div class="tabs" role="tablist" id="tabs-middle"></div>
     <div id="panes-middle"></div>
   </div>
@@ -721,6 +919,7 @@ a.tg-card span{display:block;font-size:13.4px;opacity:.93;line-height:1.3}
       <div class="chips no-print">
         <button class="chip on" id="mtShow">Показать ответы</button>
         <button class="chip" id="mtHide">Скрыть ответы (тренировка)</button>
+        <a class="chip" href="#mtgame" style="text-decoration:none">🎮 Учить в игре</a>
         <button class="chip" id="mtPrint"><svg class="ic" style="width:14px;height:14px;vertical-align:-2px"><use href="#i-print"/></svg> Распечатать</button>
       </div>
       <div class="mt-wrap"><table class="mt" id="mtTable"></table></div>
@@ -3348,6 +3547,299 @@ CURR['9g']={
   });
 })();
 </script>
+<script>
+/* ==========================================================================
+   ИГРА «ТАБЛИЦА УМНОЖЕНИЯ»: проверка → тренировка слабых примеров → звёзды и рекорды
+   Уровень знания примера: 0 — не проверен, 1 — ошибка, 2 — верно, но медленно, 3 — наизусть (верно и быстро)
+   ========================================================================== */
+(function(){
+  var root=$('#mtgame');if(!root)return;
+  var FAST=4000,GOAL=30,KEY='mtg1';
+  var RANKS=[[0,'Новичок','🌱'],[150,'Ученик','📘'],[500,'Знаток','🎯'],[1200,'Мастер','🏅'],[2500,'Гроссмейстер умножения','👑']];
+  var BADGES=[
+    ['first','👣','Первый шаг','Первый верный ответ'],
+    ['diag','🔍','Разведчик','Пройти проверку'],
+    ['combo10','🎯','Без промаха','10 верных подряд'],
+    ['blitz20','⚡','Скорость','20+ в блице'],
+    ['blitz35','🚀','Молния','35+ в блице'],
+    ['star3','⭐','Звезда столбика','3 звезды в любом столбике'],
+    ['hard','🧗','Покоритель 7, 8, 9','3 звезды в столбиках 7, 8 и 9'],
+    ['half','🌗','Половина пути','18 примеров наизусть'],
+    ['all','🏆','Таблица покорена','Все 36 примеров наизусть'],
+    ['goal3','🔥','Три дня подряд','Цель дня 3 дня подряд']
+  ];
+  var D=load();
+  function load(){var d=null;try{d=JSON.parse(store.get(KEY,'')||'null');}catch(e){}
+    d=d||{};d.m=d.m||{};d.stars=d.stars||{};d.badges=d.badges||{};d.goal=d.goal||{day:'',n:0};
+    d.xp=d.xp||0;d.blitz=d.blitz||0;d.goalStreak=d.goalStreak||0;d.goalLast=d.goalLast||'';return d;}
+  function save(){store.set(KEY,JSON.stringify(D));}
+  function today(){return new Date().toISOString().slice(0,10);}
+  function k(a,b){return Math.min(a,b)+'x'+Math.max(a,b);}
+  function lv(a,b){var r=D.m[k(a,b)];return r?r.lv:0;}
+  var PAIRS=[];for(var a=2;a<=9;a++)for(var b=a;b<=9;b++)PAIRS.push([a,b]);
+  function knownCount(){return PAIRS.filter(function(p){return lv(p[0],p[1])===3;}).length;}
+  function starsTotal(){var s=0;for(var c=2;c<=9;c++)s+=D.stars[c]||0;return s;}
+
+  /* --- хитрости: как быстро получить ответ --- */
+  function trick(a,b,hide){
+    var p=hide?'?':a*b,x,y,t;
+    if(a===b)t=hide?('Это квадрат числа. Подсказка: '+(a-1)+' × '+a+' = '+((a-1)*a)+', прибавьте ещё одно '+a+'.'):
+      ('<b>'+a+' × '+a+' = '+p+'</b> — это квадрат числа. Квадраты стоит запомнить отдельно: 6·6=36, 7·7=49, 8·8=64, 9·9=81.');
+    else if(a*b===56)t=hide?'Вспомните ряд <b>5, 6, 7, 8</b>: 7 и 8 стоят в его конце, а ответ — первые две цифры.':'<b>7 × 8 = 56</b> — цифры идут подряд: <b>5, 6, 7, 8</b> → 56 = 7 × 8.';
+    else{
+      var order=[2,5,9,4,3,6,8,7];x=a;y=b;
+      for(var i=0;i<order.length;i++){if(a===order[i]){x=a;y=b;break;}if(b===order[i]){x=b;y=a;break;}}
+      switch(x){
+        case 2:t='Умножить на 2 — значит удвоить: '+y+' + '+y+' = <b>'+p+'</b>.';break;
+        case 5:t='На 5 — это половина от умножения на 10: '+y+' × 10 = '+(y*10)+', половина — <b>'+p+'</b>.';break;
+        case 9:t='На 9: '+y+' × 10 − '+y+' = '+(y*10)+' − '+y+' = <b>'+p+'</b>.'+(hide?'':' Проверка: сумма цифр ответа равна 9.');break;
+        case 4:t='На 4 — удвой два раза: '+y+' → '+(y*2)+' → <b>'+p+'</b>.';break;
+        case 3:t='На 3 — удвой и прибавь ещё раз: '+(y*2)+' + '+y+' = <b>'+p+'</b>.';break;
+        case 6:t='На 6 — возьми «на 5» и прибавь ещё одно '+y+': '+(y*5)+' + '+y+' = <b>'+p+'</b>.';break;
+        case 8:t='На 8 — удвой три раза: '+y+' → '+(y*2)+' → '+(y*4)+' → <b>'+p+'</b>.';break;
+        default:t='На 7 — возьми «на 5» и прибавь «на 2»: '+(y*5)+' + '+(y*2)+' = <b>'+p+'</b>.';
+      }
+    }
+    if(a!==b)t+=' Помните: '+a+' × '+b+' = '+b+' × '+a+' — выучил один пример, знаешь два.';
+    return t;
+  }
+
+  /* --- шапка с рангом и счётчиками --- */
+  function rankOf(xp){var r=RANKS[0],n=null;for(var i=0;i<RANKS.length;i++){if(xp>=RANKS[i][0]){r=RANKS[i];n=RANKS[i+1]||null;}}return{r:r,n:n};}
+  function paintTop(){
+    var o=rankOf(D.xp);
+    $('#mgRankIco').textContent=o.r[2];$('#mgRankName').textContent=o.r[1]+' · '+D.xp+' очков';
+    $('#mgRankNext').textContent=o.n?('до ранга «'+o.n[1]+'»: '+(o.n[0]-D.xp)+' очков'):'высший ранг — вы мастер таблицы!';
+    $('#mgXpBar').style.width=(o.n?Math.round((D.xp-o.r[0])/(o.n[0]-o.r[0])*100):100)+'%';
+    $('#mgKnown').textContent=knownCount();$('#mgStars').textContent=starsTotal();$('#mgBlitzBest').textContent=D.blitz;
+    var g=D.goal.day===today()?D.goal.n:0;$('#mgGoalN').textContent=Math.min(g,GOAL);$('#mgGoalBar').style.width=Math.min(100,g/GOAL*100)+'%';
+  }
+  /* --- карта таблицы --- */
+  var selCell='';
+  function paintMap(){
+    var h='<tr><th>×</th>';for(var c=2;c<=9;c++)h+='<th>'+c+'</th>';h+='</tr>';
+    for(var r=2;r<=9;r++){h+='<tr><th>'+r+'</th>';
+      for(c=2;c<=9;c++){var id=r+'_'+c;h+='<td class="l'+lv(r,c)+(selCell===id?' sel':'')+'" data-a="'+r+'" data-b="'+c+'" title="'+r+' × '+c+' = '+(r*c)+'">'+(r*c)+'</td>';}
+      h+='</tr>';}
+    $('#mgMap').innerHTML=h;
+  }
+  $('#mgMap').addEventListener('click',function(e){
+    var td=e.target.closest('td');if(!td)return;var a=+td.getAttribute('data-a'),b=+td.getAttribute('data-b');
+    selCell=a+'_'+b;paintMap();
+    var names=['ещё не проверяли','была ошибка — потренируйте','знает, но думает дольше 4 секунд','знает наизусть'];
+    $('#mgFact').innerHTML='<b>'+a+' × '+b+' = '+(a*b)+'</b> · '+names[lv(a,b)]+'<br>'+trick(a,b);
+  });
+  /* --- награды --- */
+  function award(id){if(D.badges[id])return null;D.badges[id]=today();var b=BADGES.filter(function(x){return x[0]===id;})[0];return b;}
+  function checkBadges(){
+    var got=[],kc=knownCount();
+    function t(c,id){if(c){var b=award(id);if(b)got.push(b);}}
+    t(D.total>0,'first');t(D.diagDone,'diag');t((D.comboBest||0)>=10,'combo10');t(D.blitz>=20,'blitz20');t(D.blitz>=35,'blitz35');
+    t([2,3,4,5,6,7,8,9].some(function(c){return D.stars[c]===3;}),'star3');
+    t(D.stars[7]===3&&D.stars[8]===3&&D.stars[9]===3,'hard');t(kc>=18,'half');t(kc>=36,'all');t(D.goalStreak>=3,'goal3');
+    return got;
+  }
+  function paintBadges(){
+    $('#mgBadges').innerHTML=BADGES.map(function(b){var has=!!D.badges[b[0]];
+      return '<div class="mg-badge '+(has?'got':'lock')+'"><span class="e">'+b[1]+'</span><div><b>'+b[2]+'</b><small>'+b[3]+'</small></div></div>';}).join('');
+  }
+  /* --- отчёт для родителя --- */
+  function reportData(){
+    var c=[0,0,0,0],weak=[],slow=[];
+    PAIRS.forEach(function(p){var l=lv(p[0],p[1]);c[l]++;if(l===1)weak.push(p);if(l===2)slow.push(p);});
+    weak.sort(function(x,y){return (y[0]*y[1])-(x[0]*x[1]);});
+    return{c:c,weak:weak,slow:slow};
+  }
+  function pairTxt(p){return p[0]+'×'+p[1];}
+  function paintReport(){
+    var r=reportData(),h='<div class="mg-report">';
+    if(r.c[0]===36){h+='<div>Пока нет данных. Начните с вкладки <b>«Проверка»</b>: за 3 минуты игра найдёт примеры, которые ребёнок не помнит.</div>';}
+    else{
+      h+='<div class="row">Наизусть: <b>'+r.c[3]+' из 36</b> · медленно: <b>'+r.c[2]+'</b> · с ошибками: <b>'+r.c[1]+'</b> · не проверено: <b>'+r.c[0]+'</b></div>';
+      if(r.weak.length)h+='<div class="row">Учить в первую очередь: '+r.weak.slice(0,8).map(function(p){return '<span class="pill p1">'+pairTxt(p)+'</span>';}).join(' ')+'</div>';
+      if(r.slow.length)h+='<div class="row">Довести до скорости: '+r.slow.slice(0,8).map(function(p){return '<span class="pill p2">'+pairTxt(p)+'</span>';}).join(' ')+'</div>';
+      h+='<div>'+(r.c[3]===36?'Таблица выучена! Раз в неделю проходите «Блиц», чтобы не забылась.':
+        'План: каждый день одна «Тренировка» (15 примеров) — игра сама чаще даёт слабые примеры. Цель на неделю — '+Math.min(36,r.c[3]+6)+' зелёных клеток.')+'</div>';
+    }
+    $('#mgReport').innerHTML=h+'</div>';
+  }
+  function reportText(){
+    var r=reportData();
+    return 'Таблица умножения — прогресс ('+new Date().toLocaleDateString('ru-RU')+')\n'+
+      'Наизусть: '+r.c[3]+' из 36; медленно: '+r.c[2]+'; с ошибками: '+r.c[1]+'; не проверено: '+r.c[0]+'\n'+
+      (r.weak.length?'Ошибки: '+r.weak.map(pairTxt).join(', ')+'\n':'')+
+      (r.slow.length?'Медленно: '+r.slow.map(pairTxt).join(', ')+'\n':'')+
+      'Ранг: '+rankOf(D.xp).r[1]+', очков: '+D.xp+', рекорд блица: '+D.blitz+'\n'+location.href.split('#')[0]+'#mtgame';
+  }
+  $('#mgCopy').addEventListener('click',function(){
+    var txt=reportText(),btn=this;
+    function done(){toast('Отчёт скопирован — можно отправить репетитору');}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,fallback);}else fallback();
+    function fallback(){var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();
+      try{document.execCommand('copy');done();}catch(e){window.prompt('Скопируйте отчёт:',txt);}ta.remove();}
+  });
+  $('#mgReset').addEventListener('click',function(){
+    if(!window.confirm('Сбросить весь прогресс игры (карта, звёзды, очки, награды)? Это нельзя отменить.'))return;
+    stopTimer();D={m:{},stars:{},badges:{},goal:{day:'',n:0},xp:0,blitz:0,goalStreak:0,goalLast:''};save();paintAll();intro();
+  });
+  var toastT=null;
+  function toast(t){var el=$('#mgToast');el.textContent=t;el.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){el.classList.remove('on');},2600);}
+  function paintAll(){paintTop();paintMap();paintBadges();paintReport();}
+
+  /* --- игровой процесс --- */
+  var stage=$('#mgStage'),mode='diag',G=null,timer=null;
+  function stopTimer(){clearInterval(timer);timer=null;}
+  function setMode(m){mode=m;stopTimer();G=null;
+    $$('.mg-modes .tab',root).forEach(function(b){var on=b.getAttribute('data-mode')===m;b.setAttribute('aria-selected',on?'true':'false');b.classList.toggle('on',on);});
+    intro();}
+  function intro(){
+    G=null;document.body.classList.remove('mg-playing');var h='<div class="mg-intro">';
+    if(mode==='diag')h+='<div class="mg-big">🔍</div><h4>Проверка всей таблицы</h4><p>36 примеров от 2×2 до 9×9, по одному разу. '+
+      'Отвечайте быстро: если ответ «на автомате» (до 4 секунд), клетка станет зелёной. Займёт около 3 минут.</p>'+
+      '<button class="btn btn-primary" data-go="diag">Начать проверку</button>';
+    if(mode==='train'){var r=reportData();
+      h+='<div class="mg-big">🎯</div><h4>Тренировка слабых мест</h4><p>15 примеров. Игра чаще даёт те, где были ошибки или долгие раздумья, '+
+      'а ошибку вернёт через пару вопросов — пока не запомнится. После ошибки покажем хитрость.</p>'+
+      (r.c[0]===36?'<p class="muted small">Совет: сначала пройдите «Проверку» — тогда тренировка будет точнее.</p>':'')+
+      '<button class="btn btn-primary" data-go="train">Начать тренировку</button>';}
+    if(mode==='cols'){h+='<div class="mg-big">⭐</div><h4>Столбики на звёзды</h4><p>Выберите столбик: 10 примеров от ×1 до ×10. '+
+      '★ — 7 верных, ★★ — 9 верных, ★★★ — все 10 и быстро.</p><div class="mg-colpick">';
+      for(var c=2;c<=9;c++){var s=D.stars[c]||0;h+='<button class="mg-colbtn" data-col="'+c+'"><b>× '+c+'</b><span>'+starStr(s)+'</span></button>';}
+      h+='</div><p class="muted small" style="margin-top:10px">Учите по порядку: 2, 5 и 10 → 3, 4 → 6 → 9 → 7 и 8.</p>';}
+    if(mode==='blitz')h+='<div class="mg-big">⚡</div><h4>Блиц: 60 секунд</h4><p>Сколько примеров успеете решить за минуту? Ошибка не останавливает игру. '+
+      'Серия из 5 верных подряд даёт двойные очки.</p><p><b>Ваш рекорд: '+D.blitz+'</b></p>'+
+      '<button class="btn btn-primary" data-go="blitz">Старт!</button>';
+    stage.innerHTML=h+'</div>';
+  }
+  function starStr(s){var h='';for(var i=1;i<=3;i++)h+=i<=s?'★':'<span class="off">★</span>';return h;}
+  function weightedPick(exclude){
+    var w=[3,6,3,1],tot=0,list=PAIRS.filter(function(p){return k(p[0],p[1])!==exclude;});
+    list.forEach(function(p){tot+=w[lv(p[0],p[1])];});
+    var x=Math.random()*tot;for(var i=0;i<list.length;i++){x-=w[lv(list[i][0],list[i][1])];if(x<=0)return list[i];}
+    return list[list.length-1];
+  }
+  function orient(p){return Math.random()<.5?[p[0],p[1]]:[p[1],p[0]];}
+  function start(m,col){
+    stopTimer();document.body.classList.add('mg-playing');
+    G={mode:m,col:col||0,i:0,right:0,wrong:0,combo:0,xp:0,typed:'',lock:false,miss:[],times:[],re:[],newB:[],left:60};
+    if(m==='diag'){G.list=shuffle(PAIRS.slice()).map(orient);G.n=G.list.length;}
+    if(m==='train'){G.n=15;}
+    if(m==='cols'){G.list=shuffle([1,2,3,4,5,6,7,8,9,10]).map(function(x){return Math.random()<.5?[col,x]:[x,col];});G.n=10;}
+    if(m==='blitz'){G.n=0;timer=setInterval(function(){G.left--;var t=$('.mg-time',stage);if(t)t.textContent=G.left;if(G.left<=0){stopTimer();finish();}},1000);}
+    next();
+  }
+  function nextPair(){
+    if(G.mode==='diag'||G.mode==='cols')return G.list[G.i];
+    if(G.mode==='train'){
+      for(var j=0;j<G.re.length;j++){if(G.re[j].at<=G.i){var q=G.re.splice(j,1)[0];return orient(q.p);}}
+      return orient(weightedPick(G.cur?k(G.cur[0],G.cur[1]):''));
+    }
+    var p=Math.random()<.7?weightedPick(G.cur?k(G.cur[0],G.cur[1]):''):[R(2,9),R(2,9)];return p;
+  }
+  function next(){
+    if(G.mode!=='blitz'&&G.i>=G.n){return finish();}
+    G.cur=nextPair();G.typed='';G.lock=false;G.t0=Date.now();G.hint=false;
+    var hud='<div class="mg-hud">'+
+      (G.mode==='blitz'?'<span class="mg-time">'+G.left+'</span><span>сек · верно: '+G.right+'</span>':'<span>Пример '+(G.i+1)+' из '+G.n+'</span><span>· верно: '+G.right+'</span>')+
+      '<span class="mg-combo'+(G.combo>=3?' on':'')+'">🔥 серия '+G.combo+'</span></div>'+
+      (G.mode==='blitz'?'':'<div class="mg-prog"><i style="width:'+(G.i/G.n*100)+'%"></i></div>');
+    stage.innerHTML=hud+'<div class="mg-q" id="mgQ">'+G.cur[0]+' × '+G.cur[1]+' = <span class="ans empty">?</span></div>'+
+      '<div class="mg-fb" id="mgFb">'+(G.mode==='train'?'<button class="btn btn-ghost btn-sm" data-hint="1">'+svgIco('i-bulb')+'Подсказка</button>':'')+'</div>'+
+      '<div class="mg-pad">'+[1,2,3,4,5,6,7,8,9].map(function(d){return '<button data-d="'+d+'">'+d+'</button>';}).join('')+
+      '<button class="del" data-del="1" aria-label="Стереть">⌫</button><button data-d="0">0</button><button class="ok" data-ok="1">OK</button></div>'+
+      '<div class="mg-row"><button class="btn btn-ghost btn-sm" data-stop="1">Закончить</button></div>';
+  }
+  function paintTyped(){var s=$('#mgQ .ans',stage);if(!s)return;s.textContent=G.typed||'?';s.classList.toggle('empty',!G.typed);}
+  function type(d){
+    if(!G||G.lock)return;if(G.typed.length>=3)return;G.typed+=d;paintTyped();
+    if(G.typed.length===String(G.cur[0]*G.cur[1]).length)check();
+  }
+  function check(){
+    if(!G||G.lock||!G.typed)return;G.lock=true;
+    var a=G.cur[0],b=G.cur[1],ok=+G.typed===a*b,dt=Date.now()-G.t0,fast=dt<=FAST&&!G.hint,key=k(a,b),rec=D.m[key]||{lv:0,ok:0,bad:0};
+    var q=$('#mgQ',stage),fb=$('#mgFb',stage);
+    G.times.push(dt);
+    if(a>=2&&b>=2&&a<=9&&b<=9){ /* примеры с 1 и 10 на карту не влияют */
+      if(ok){rec.ok++;rec.lv=fast?(rec.lv===1?2:3):2;}else{rec.bad++;rec.lv=1;}
+      rec.last=today();D.m[key]=rec;
+    }
+    if(ok){
+      G.right++;G.combo++;D.comboBest=Math.max(D.comboBest||0,G.combo);D.total=(D.total||0)+1;
+      var gain=10+(fast?5:0);if(G.mode==='blitz'&&G.combo>=5)gain*=2;G.xp+=gain;D.xp+=gain;
+      q.classList.add('ok');var pl=document.createElement('span');pl.className='mg-plus';pl.textContent='+'+gain;q.appendChild(pl);
+      countSolved();goalTick();
+      if(G.combo===5||G.combo===10||G.combo===20)toast('🔥 Серия '+G.combo+'! Так держать!');
+      save();paintTop();paintMap();
+      setTimeout(advance,G.mode==='blitz'?260:520);
+    }else{
+      G.wrong++;G.combo=0;G.miss.push([a,b]);
+      if(G.mode==='train')G.re.push({p:[a,b],at:G.i+3}),G.n=Math.min(G.n+1,25);
+      q.classList.add('no');save();paintTop();paintMap();
+      var right='Правильно: <b>'+a+' × '+b+' = '+(a*b)+'</b>';
+      if(G.mode==='blitz'||G.mode==='diag'){fb.className='mg-fb no';fb.innerHTML=right;setTimeout(advance,G.mode==='blitz'?750:1100);}
+      else{fb.className='mg-fb no';fb.innerHTML=right+'<div class="mg-trick">'+trick(Math.min(a,b),Math.max(a,b))+'</div>'+
+        '<button class="btn btn-primary btn-sm" data-next="1">Понятно, дальше'+svgIco('i-arrow-right')+'</button>';}
+    }
+  }
+  function advance(){if(!G)return;G.i++;if(G.mode==='blitz'&&G.left<=0)return;next();}
+  function goalTick(){
+    var t=today();if(D.goal.day!==t){D.goal={day:t,n:0};}
+    D.goal.n++;
+    if(D.goal.n===GOAL){
+      var y=new Date(Date.now()-864e5).toISOString().slice(0,10);
+      D.goalStreak=D.goalLast===y?D.goalStreak+1:1;D.goalLast=t;
+      toast('🎉 Цель дня выполнена! Дней подряд: '+D.goalStreak);confetti(40);
+    }
+  }
+  function finish(){
+    stopTimer();document.body.classList.remove('mg-playing');if(!G)return;var g=G;G=null;
+    var h='<div class="mg-res">',stars=0,newRec=false;
+    if(g.mode==='diag'){D.diagDone=true;var kc=knownCount();
+      h+='<div class="mg-big">🔍</div><h4>Проверка завершена</h4><p>Наизусть: <b>'+kc+' из 36</b>. Карта «Моя таблица» показывает, что учить дальше.</p>';}
+    if(g.mode==='train')h+='<div class="mg-big">'+(g.wrong===0?'🏆':'💪')+'</div><h4>'+(g.wrong===0?'Без единой ошибки!':'Тренировка завершена')+'</h4>';
+    if(g.mode==='cols'){var avg=g.times.reduce(function(s,x){return s+x;},0)/Math.max(1,g.times.length);
+      stars=g.right>=10&&avg<=FAST?3:g.right>=9?2:g.right>=7?1:0;
+      var prev=D.stars[g.col]||0;if(stars>prev)D.stars[g.col]=stars;
+      h+='<h4>Столбик × '+g.col+'</h4><div class="mg-stars-big">'+starStr(stars)+'</div>'+
+        (stars>prev&&prev>0?'<p>Новый рекорд столбика!</p>':'')+(stars<3?'<p class="muted">'+(stars===0?'Нужно 7 верных из 10 для первой звезды.':g.right===10?'Все верно! Для третьей звезды отвечайте быстрее — до 4 секунд.':'Ещё немного — и будет больше звёзд!')+'</p>':'');}
+    if(g.mode==='blitz'){newRec=g.right>D.blitz;if(newRec)D.blitz=g.right;
+      h+='<div class="mg-big">⚡</div><h4>'+(newRec?'Новый рекорд: ':'Результат: ')+g.right+'</h4><p>Ваш рекорд: <b>'+D.blitz+'</b></p>';}
+    h+='<div class="mg-res-stats"><span>✅ верно: '+g.right+'</span><span>❌ ошибок: '+g.wrong+'</span><span>✨ +'+g.xp+' очков</span></div>';
+    if(g.miss.length){var uniq={};g.miss.forEach(function(p){uniq[k(p[0],p[1])]=p;});
+      h+='<div class="mg-res-list">Повторить: '+Object.keys(uniq).map(function(x){var p=uniq[x];return '<b>'+p[0]+'×'+p[1]+'='+(p[0]*p[1])+'</b>';}).join(', ')+'</div>';}
+    var got=checkBadges();
+    if(got.length)h+='<div style="margin-top:10px">'+got.map(function(b){return '<span class="mg-newbadge">'+b[1]+' Новая награда: '+b[2]+'</span>';}).join('')+'</div>';
+    h+='<div class="mg-row">'+
+      (g.mode==='cols'?'<button class="btn btn-primary" data-col="'+g.col+'">Ещё раз × '+g.col+'</button><button class="btn btn-ghost" data-back="1">Другой столбик</button>':
+       '<button class="btn btn-primary" data-go="'+(g.mode==='diag'?'train':g.mode)+'">'+(g.mode==='diag'?'Тренировать слабые':'Ещё раз')+'</button>')+'</div>';
+    stage.innerHTML=h+'</div>';
+    save();paintAll();
+    if(got.length||newRec||stars===3||(g.mode==='train'&&g.wrong===0))confetti(40);
+  }
+  root.addEventListener('click',function(e){
+    var t=e.target.closest('button');if(!t||!root.contains(t))return;
+    if(t.closest('.mg-modes')){setMode(t.getAttribute('data-mode'));return;}
+    if(t.hasAttribute('data-go')){var m=t.getAttribute('data-go');if(m!==mode){setMode(m);}start(m);return;}
+    if(t.hasAttribute('data-col')){start('cols',+t.getAttribute('data-col'));return;}
+    if(t.hasAttribute('data-back')){intro();return;}
+    if(t.hasAttribute('data-d')){type(t.getAttribute('data-d'));return;}
+    if(t.hasAttribute('data-del')){if(G&&!G.lock){G.typed=G.typed.slice(0,-1);paintTyped();}return;}
+    if(t.hasAttribute('data-ok')){check();return;}
+    if(t.hasAttribute('data-next')){advance();return;}
+    if(t.hasAttribute('data-hint')){if(G&&!G.lock){G.hint=true;var a=G.cur[0],b=G.cur[1];
+      $('#mgFb',stage).innerHTML='<div class="mg-trick">'+trick(Math.min(a,b),Math.max(a,b),true)+'</div>';}return;}
+    if(t.hasAttribute('data-stop')){stopTimer();if(G&&G.mode==='blitz'){finish();}else if(G&&G.i>0){finish();}else{intro();}return;}
+  });
+  document.addEventListener('keydown',function(e){
+    if(!G)return;var tg=e.target;if(tg&&(tg.tagName==='INPUT'||tg.tagName==='TEXTAREA'||tg.isContentEditable))return;
+    var r=stage.getBoundingClientRect();if(r.bottom<0||r.top>window.innerHeight)return;
+    if(/^[0-9]$/.test(e.key)){type(e.key);e.preventDefault();}
+    else if(e.key==='Backspace'){if(!G.lock){G.typed=G.typed.slice(0,-1);paintTyped();}e.preventDefault();}
+    else if(e.key==='Enter'){if(G.lock&&$('[data-next]',stage)){advance();}else check();e.preventDefault();}
+  });
+  paintAll();intro();
+})();
+</script>
 <!-- ============ УЧИТЕЛЬ С СОВЕТАМИ ============ -->
 <style>
 .tip-fairy{position:fixed;left:12px;bottom:12px;z-index:45;display:flex;align-items:flex-start;gap:0;
@@ -3506,6 +3998,7 @@ shuffle();
 function pick(){if(pos>=order.length)shuffle();var t=TIPS[order[pos++]];kind.textContent=t[0]==='Факт'?'Знаете ли вы?':(t[0]==='Совет'?'Совет учителя':t[0]);txt.textContent=t[1];}
 function duration(){return Math.max(SHOW,Math.min(40000,txt.textContent.length*320));}
 function show(){
+  if(document.body.classList.contains('mg-playing')){clearTimeout(tShow);tShow=setTimeout(show,GAP);return;}
   pick();var d=duration();
   el.style.setProperty('--dur',d/1000+'s');
   el.classList.remove('on','paused');void el.offsetWidth;el.classList.add('on');

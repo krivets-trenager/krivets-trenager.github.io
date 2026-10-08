@@ -150,13 +150,14 @@ header.top{position:sticky;top:0;z-index:60;border-bottom:1px solid var(--line);
 .hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;pointer-events:none}
 .hero::before{width:420px;height:420px;background:radial-gradient(circle,rgba(124,58,237,.35),transparent 70%);top:-160px;right:-90px}
 .hero::after{width:360px;height:360px;background:radial-gradient(circle,rgba(14,165,233,.28),transparent 70%);bottom:-180px;left:-120px}
-.hero-tg .btn{position:relative;overflow:hidden;isolation:isolate}
-.hero-tg .btn::after{content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;z-index:1;pointer-events:none;
+.hero-tg .btn,.h1-tg{position:relative;overflow:hidden;isolation:isolate}
+.hero-tg .btn::after,.h1-tg::after{content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;z-index:1;pointer-events:none;
   background:linear-gradient(105deg,transparent 0,rgba(255,255,255,.75) 50%,transparent 100%);transform:skewX(-20deg);animation:tgShine 5s ease-in-out infinite}
 @keyframes tgShine{0%,70%{left:-70%}100%{left:130%}}
-@media(prefers-reduced-motion:reduce){.hero-tg .btn::after{animation:none;display:none}}
+@media(prefers-reduced-motion:reduce){.hero-tg .btn::after,.h1-tg::after{animation:none;display:none}}
 .hero-tg{display:flex;justify-content:flex-end;margin-bottom:clamp(14px,2.5vw,26px);position:relative}
-@media(max-width:560px){.hero{padding-top:20px}.hero-tg{position:absolute;top:18px;right:15px;width:auto;margin:0;z-index:2}.hero h1{padding-right:58px}.hero-tg .btn{width:46px;height:46px;padding:0;border-radius:50%;justify-content:center;gap:0}.hero-tg .btn svg{width:22px;height:22px}.hero-tg .tg-label{display:none}}
+.h1-wrap{position:relative}.h1-tg{display:none}
+@media(max-width:560px){.hero{padding-top:20px}.hero-tg{display:none}.hero h1{padding-right:58px}.h1-tg{display:inline-flex;position:absolute;right:0;top:50%;margin-top:-23px;width:46px;height:46px;padding:0;border-radius:50%;align-items:center;justify-content:center}.h1-tg svg{width:22px;height:22px}}
 .hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:34px;align-items:center;position:relative}
 @media(max-width:940px){.hero-grid{grid-template-columns:1fr;gap:24px}}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 15px;border-radius:100px;font-weight:700;font-size:13.5px;
@@ -586,7 +587,10 @@ a.tg-card span{display:block;font-size:13.4px;opacity:.93;line-height:1.3}
   </div>
   <div class="container hero-grid">
     <div>
-      <h1>Домашний <span class="grad">помощник репетитора</span> по математике</h1>
+      <div class="h1-wrap">
+        <h1>Домашний <span class="grad">помощник репетитора</span> по математике</h1>
+        <a class="btn btn-tg btn-sm h1-tg" href="https://t.me/krivets_teach" target="_blank" rel="noopener" aria-label="Перейти в Telegram-канал автора" title="Telegram-канал автора"><svg class="ic" viewBox="0 0 24 24"><use href="#i-telegram"/></svg></a>
+      </div>
       <p class="lead">Программа по каждому классу, бесконечные примеры с проверкой, задачи с полным разбором,
         тесты, теория и шпаргалки. Всё — по действующей школьной программе (ФГОС): подготовка к школе,
         1–4 класс и математика 5–9 класс.</p>
